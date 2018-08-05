@@ -405,6 +405,7 @@
 				</plugins>
 			</build>
 		</profile>
+
         <profile>
             <id>ms-fonts</id>
             <build>
@@ -415,8 +416,7 @@
                         <version>${exec-maven-plugin-version}</version>
                         <executions>
                             <execution><!-- Run our version calculation script -->
-                                <id>Renaming build artifacts</id>
-                                <phase>compile</phase>
+                                <id>install-ms-fonts</id>
                                 <goals>
                                     <goal>exec</goal>
                                 </goals>
