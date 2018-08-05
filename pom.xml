@@ -54,6 +54,7 @@
         <encoding>UTF-8</encoding>
 		<sourceVersion>1.7</sourceVersion>
 		<targetVersion>1.7</targetVersion>
+        <mavenVersion>3.2.5</mavenVersion>
 
         <!--Dependencies-->
         <barcode4jVersion>2.0</barcode4jVersion>
@@ -77,6 +78,7 @@
         <jacoco-maven-plugin-version>0.8.0</jacoco-maven-plugin-version>
         <lifecycle-mapping-plugin-version>1.0.0</lifecycle-mapping-plugin-version>
         <maven-compiler-plugin-version>3.3</maven-compiler-plugin-version>
+        <maven-enforcer-plugin-version>1.4.1</maven-enforcer-plugin-version>
         <maven-javadoc-plugin-version>2.9</maven-javadoc-plugin-version>
         <maven-license-plugin-version>1.7.0</maven-license-plugin-version>
         <maven-source-plugin-version>2.1.2</maven-source-plugin-version>
@@ -310,6 +312,27 @@
 						</lifecycleMappingMetadata>
 					</configuration>
 				</plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin-version}</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-maven</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireMavenVersion>
+                                        <version>${mavenVersion}</version>
+                                    </requireMavenVersion>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
 			</plugins>
 		</pluginManagement>	
 	</build>
