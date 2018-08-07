@@ -31,15 +31,15 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
 import net.sf.dynamicreports.report.defaults.xml.XmlDynamicReports;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
  */
 public class Defaults {
-	private static final Log log = LogFactory.getLog(Defaults.class);
+
+	private static final Logger log = LoggerFactory.getLogger(Defaults.class);
 
 	private static Default defaults;
 
@@ -51,17 +51,22 @@ public class Defaults {
 		String resource = "dynamicreports-defaults.xml";
 		InputStream is = null;
 
+        log.debug("Loading default dataTypes and fonts from resource: {}", resource);
+
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		if (classLoader != null) {
 			is = classLoader.getResourceAsStream(resource);
-		}
+            log.debug("InputStream : {} loaded from classLoader: {}", is, classLoader);
+        }
 		if (is == null) {
 			classLoader = Defaults.class.getClassLoader();
 			if (classLoader != null) {
 				is = classLoader.getResourceAsStream(resource);
+                log.debug("InputStream : {} loaded from classLoader: {}", is, classLoader);
 			}
 			if (is == null) {
 				is = Defaults.class.getResourceAsStream("/" + resource);
+                log.debug("InputStream : {} loaded from resource: {}", is, resource);
 			}
 		}
 		if (is == null) {
@@ -70,7 +75,8 @@ public class Defaults {
 
 		try {
 			Unmarshaller unmarshaller = JAXBContext.newInstance(XmlDynamicReports.class).createUnmarshaller();
-			JAXBElement<XmlDynamicReports> root = unmarshaller.unmarshal(new StreamSource(is), XmlDynamicReports.class);
+            log.debug("Unmarshaller : {} resolved from instance of : {}", unmarshaller, XmlDynamicReports.class);
+            JAXBElement<XmlDynamicReports> root = unmarshaller.unmarshal(new StreamSource(is), XmlDynamicReports.class);
 			return root.getValue();
 		} catch (JAXBException e) {
 			log.error("Could not load dynamic reports defaults", e);
@@ -79,6 +85,7 @@ public class Defaults {
 	}
 
 	public static Default getDefaults() {
-		return defaults;
+        log.debug("Returning defaults {} generated from resource: dynamicreports-defaults.xml", defaults);
+        return defaults;
 	}
 }

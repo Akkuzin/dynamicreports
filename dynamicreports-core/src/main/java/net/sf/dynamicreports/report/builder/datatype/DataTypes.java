@@ -31,13 +31,18 @@ import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.exception.DRException;
 
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A set of build in data types
+ * A set of built in data types
  *
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
  */
 public class DataTypes {
+
+    private static final Logger log = LoggerFactory.getLogger(DataTypes.class);
+
 	private static final BigDecimalType bigDecimalType = new BigDecimalType();
 	private static final BigIntegerType bigIntegerType = new BigIntegerType();
 	private static final ByteType byteType = new ByteType();
@@ -71,8 +76,10 @@ public class DataTypes {
 	@SuppressWarnings("unchecked")
 	public static <T extends DRIDataType<?, ?>> T detectType(String dataType) throws DRException {
 		Validate.notNull(dataType, "dataType must not be null");
-
+        log.debug("Resolving DRIDataType object for : {}", dataType);
 		String dataTypeLC = dataType.toLowerCase().trim();
+
+		//todo: return this from a dataTypeMap like: return dataTypeMap.get(dataTypeLC)
 		if (dataTypeLC.equals("bigdecimal") || dataType.equals(BigDecimal.class.getName())) {
 			return (T) bigDecimalType;
 		}
@@ -149,7 +156,9 @@ public class DataTypes {
 			return (T) listType;
 		}
 
-		throw new DRException("Data type \"" + dataType + "\" is not supported");
+        log.warn("DRIDatatype for {} unsupported", dataTypeLC);
+
+        throw new DRException("Data type \"" + dataType + "\" is not supported");
 	}
 
 	public static BigDecimalType bigDecimalType() {

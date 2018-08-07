@@ -48,11 +48,15 @@ import net.sf.dynamicreports.report.constant.OrderType;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.dynamicreports.report.exception.DRReportException;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Used a static factory for common report components like {@link FieldBuilder}, {@link ColumnBuilders}
+ * and {@link VariableBuilder}
+ *
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
  */
 public class DynamicReports {
@@ -146,56 +150,77 @@ public class DynamicReports {
 
     // field
     public static <T> FieldBuilder<T> field(String name, Class<T> valueClass) {
+        log.debug("Generating FieldBuilder for name: {} of class : {}", name, valueClass);
         FieldBuilder<T> fieldBuilder = new FieldBuilder<T>(name, valueClass);
         try {
             DRIDataType<? super T, T> dataType = DataTypes.detectType(valueClass);
+            log.debug("Setting dataType for fieldBuilder: {} as {}", fieldBuilder, dataType);
             fieldBuilder.setDataType(dataType);
         } catch (DRException e) {
+            String message = String.format("Exception encountered when setting dataType for fieldBuilder: " +
+                "%s, with value class: %s for the field: %s", fieldBuilder, valueClass, name);
+            throw new DRReportException(message, e.getCause());
         }
         return fieldBuilder;
     }
 
     public static <T> FieldBuilder<T> field(String name, DRIDataType<? super T, T> dataType) {
         Validate.notNull(dataType, "dataType must not be null");
+        log.debug("Generating FieldBuilder for name: {} of DRIDataType : {}", name, dataType);
         FieldBuilder<T> fieldBuilder = null;
-        fieldBuilder = new FieldBuilder<T>(name, dataType.getValueClass());
-        fieldBuilder.setDataType(dataType);
+        try {
+            fieldBuilder = new FieldBuilder<T>(name, dataType.getValueClass());
+            log.debug("Setting dataType for fieldBuilder: {} as {}", fieldBuilder, dataType);
+            fieldBuilder.setDataType(dataType);
+        } catch (Exception e) {
+            String message = String.format("Exception encountered when setting dataType for fieldBuilder: " +
+                                               "%s, with value class: %s for the field: %s", fieldBuilder, dataType.getValueClass(), name);
+            throw new DRReportException(message, e.getCause());
+        }
         return fieldBuilder;
     }
 
     // variable
     public static <T> VariableBuilder<T> variable(ValueColumnBuilder<?, ?> column, Calculation calculation) {
         Validate.notNull(column, "column must not be null");
+        log.debug("Resolving VariableBuilder for column: {} using calculation : {}", column, calculation);
         return new VariableBuilder<T>(column, calculation);
     }
 
     public static <T> VariableBuilder<T> variable(String name, ValueColumnBuilder<?, ?> column, Calculation calculation) {
         Validate.notNull(column, "column must not be null");
+        log.debug("Resolving VariableBuilder for column: {}, column id : {} using calculation : {}", column, name, calculation);
         return new VariableBuilder<T>(name, column, calculation);
     }
 
     public static <T> VariableBuilder<T> variable(FieldBuilder<T> field, Calculation calculation) {
         Validate.notNull(field, "field must not be null");
+        log.debug("Resolving VariableBuilder from FieldBuilder : {} using calculation : {}", field, calculation);
         return new VariableBuilder<T>(field, calculation);
     }
 
     public static <T> VariableBuilder<T> variable(String name, FieldBuilder<T> field, Calculation calculation) {
+        log.debug("Resolving VariableBuilder for FieldBuilder: {}, column id : {} using calculation : {}", field, name, calculation);
         return new VariableBuilder<T>(name, field, calculation);
     }
 
     public static <T> VariableBuilder<T> variable(String fieldName, Class<?> valueClass, Calculation calculation) {
+        log.debug("Resolving VariableBuilder for fieldName : {}, of valueClass: {} using the calculation: {}", fieldName, valueClass, calculation);
         return new VariableBuilder<T>(field(fieldName, valueClass), calculation);
     }
 
     public static <T> VariableBuilder<T> variable(String name, String fieldName, Class<?> valueClass, Calculation calculation) {
+        log.debug("Resolving VariableBuilder for name:{}, fieldName: {} of valueClass: {}, using the calculation: {}", name, fieldName, valueClass, calculation);
         return new VariableBuilder<T>(name, field(fieldName, valueClass), calculation);
     }
 
     public static <T> VariableBuilder<T> variable(DRIExpression<?> expression, Calculation calculation) {
+        log.debug("Resolving VariableBuilder for DRIExpression: {}, using calculation : {}", expression, calculation);
         return new VariableBuilder<T>(expression, calculation);
     }
 
     public static <T> VariableBuilder<T> variable(String name, DRIExpression<?> expression, Calculation calculation) {
+        log.debug("Resolving VariableBuilder for name : {}, with DRIExpression: {}, using the calculation: {}", name, expression, calculation);
         return new VariableBuilder<T>(name, expression, calculation);
     }
 
@@ -240,7 +265,6 @@ public class DynamicReports {
         return new SortBuilder(expression).setOrderType(OrderType.DESCENDING);
     }
 
-    // hyperLink
     public static HyperLinkBuilder hyperLink() {
         return new HyperLinkBuilder();
     }

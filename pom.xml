@@ -66,6 +66,8 @@
         <jasperreportsVersion>6.5.1</jasperreportsVersion>
         <jsonVersion>20080701</jsonVersion>
         <junitVersion>4.0</junitVersion>
+        <logbackClassicVersion>1.2.3</logbackClassicVersion>
+        <log4j-to-slf4jVersion>2.10.0</log4j-to-slf4jVersion>
         <poiVersion>3.15</poiVersion>
         <slf4jVersion>1.7.25</slf4jVersion>
 		<springframeworkVersion>3.2.18.RELEASE</springframeworkVersion>

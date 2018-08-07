@@ -122,6 +122,7 @@ import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.definition.expression.DRIExpression;
 import net.sf.dynamicreports.report.exception.DRException;
 
+import net.sf.dynamicreports.report.exception.DRReportException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -190,7 +191,17 @@ public class DefaultAdhocReportCustomizer implements AdhocReportCustomizer {
 	protected DRIExpression<?> getFieldExpression(String name) {
 		DRIDataType<?, ?> type = getFieldType(name);
 		if (type != null) {
-			return DynamicReports.field(name, type).build();
+
+            DRIExpression<?> expression = null;
+
+            try {
+                expression = DynamicReports.field(name, type).build();
+            } catch (Exception e) {
+                String message = String.format("Exception encountered while generating DRIException for field: %s of type %s", name, type);
+                throw new DRReportException(message, e.getCause());
+            }
+
+            return expression;
 		}
 		return DynamicReports.field(name, Object.class).build();
 	}

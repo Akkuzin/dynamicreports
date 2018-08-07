@@ -98,6 +98,8 @@ import net.sf.jasperreports.export.SimpleGraphics2DExporterOutput;
 import net.sf.jasperreports.export.SimpleGraphics2DReportConfiguration;
 import net.sf.jasperreports.view.JasperDesignViewer;
 import net.sf.jasperreports.view.JasperViewer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The most used report builder for creating reports. It allows constructing and customizing the whole report content.
@@ -107,6 +109,9 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
  */
 public class JasperReportBuilder extends ReportBuilder<JasperReportBuilder> {
+
+    private static final Logger log = LoggerFactory.getLogger(JasperReportBuilder.class);
+
 	private static final long serialVersionUID = Constants.SERIAL_VERSION_UID;
 
 	private JasperReportDesign reportDesign;
@@ -120,6 +125,7 @@ public class JasperReportBuilder extends ReportBuilder<JasperReportBuilder> {
 	private Map<String, Object> parameters;
 
 	public JasperReportBuilder() {
+        log.debug("JasperReportsBuilder instantiated as {}", this);
 		setTemplateDesign(new JasperEmptyTemplateDesign());
 	}
 
