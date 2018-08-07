@@ -35,6 +35,8 @@ import net.sf.dynamicreports.report.definition.expression.DRISimpleExpression;
 
 import org.junit.Test;
 
+import static net.sf.dynamicreports.report.builder.DynamicReports.cnd;
+
 /**
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
  */
@@ -44,55 +46,55 @@ public class ConditionsTest {
 	public void test() {
 		// equal
 		FieldBuilder<Integer> value = DynamicReports.field("name", Integer.class);
-		//conditionTrue("equal", cnd.equal(value, 5, 10, 20));
-		//conditionFalse("equal", cnd.equal(value, 5, 20));
+		conditionTrue("equal", cnd.equal(value, 5.0, 10, 20));
+		conditionFalse("equal", cnd.equal(value, 5.0, 20));
 
 		// unequal
-		//conditionFalse("unequal", cnd.unEqual(value, 5, 10, 20));
-		//conditionTrue("unequal", cnd.unEqual(value, 5, 20));
+		conditionFalse("unequal", cnd.unEqual(value, 5.0, 10, 20));
+		conditionTrue("unequal", cnd.unEqual(value, 5.0, 20));
 
 		// smaller
-		conditionFalse("smaller", DynamicReports.cnd.smaller(value, 5));
-		conditionFalse("smaller", DynamicReports.cnd.smaller(value, 10));
-		conditionTrue("smaller", DynamicReports.cnd.smaller(value, 15));
+		conditionFalse("smaller", cnd.smaller(value, 5));
+		conditionFalse("smaller", cnd.smaller(value, 10));
+		conditionTrue("smaller", cnd.smaller(value, 15));
 
 		// smallerOrEquals
-		conditionFalse("smallerOrEquals", DynamicReports.cnd.smallerOrEquals(value, 5));
-		conditionTrue("smallerOrEquals", DynamicReports.cnd.smallerOrEquals(value, 10));
-		conditionTrue("smallerOrEquals", DynamicReports.cnd.smallerOrEquals(value, 15));
+		conditionFalse("smallerOrEquals", cnd.smallerOrEquals(value, 5));
+		conditionTrue("smallerOrEquals", cnd.smallerOrEquals(value, 10));
+		conditionTrue("smallerOrEquals", cnd.smallerOrEquals(value, 15));
 
 		// greater
-		conditionTrue("greater", DynamicReports.cnd.greater(value, 5));
-		conditionFalse("greater", DynamicReports.cnd.greater(value, 10));
-		conditionFalse("greater", DynamicReports.cnd.greater(value, 15));
+		conditionTrue("greater", cnd.greater(value, 5));
+		conditionFalse("greater", cnd.greater(value, 10));
+		conditionFalse("greater", cnd.greater(value, 15));
 
 		// greaterOrEquals
-		conditionTrue("greaterOrEquals", DynamicReports.cnd.greaterOrEquals(value, 5));
-		conditionTrue("greaterOrEquals", DynamicReports.cnd.greaterOrEquals(value, 10));
-		conditionFalse("greaterOrEquals", DynamicReports.cnd.greaterOrEquals(value, 15));
+		conditionTrue("greaterOrEquals", cnd.greaterOrEquals(value, 5));
+		conditionTrue("greaterOrEquals", cnd.greaterOrEquals(value, 10));
+		conditionFalse("greaterOrEquals", cnd.greaterOrEquals(value, 15));
 
 		// between
-		conditionTrue("between", DynamicReports.cnd.between(value, 5, 15));
-		conditionTrue("between", DynamicReports.cnd.between(value, 5, 10));
-		conditionTrue("between", DynamicReports.cnd.between(value, 10, 20));
-		conditionFalse("between", DynamicReports.cnd.between(value, 5, 9));
-		conditionFalse("between", DynamicReports.cnd.between(value, 11, 20));
+		conditionTrue("between", cnd.between(value, 5, 15));
+		conditionTrue("between", cnd.between(value, 5, 10));
+		conditionTrue("between", cnd.between(value, 10, 20));
+		conditionFalse("between", cnd.between(value, 5, 9));
+		conditionFalse("between", cnd.between(value, 11, 20));
 
 		// notBetween
-		conditionFalse("notBetween", DynamicReports.cnd.notBetween(value, 5, 15));
-		conditionFalse("notBetween", DynamicReports.cnd.notBetween(value, 5, 10));
-		conditionFalse("notBetween", DynamicReports.cnd.notBetween(value, 10, 20));
-		conditionTrue("notBetween", DynamicReports.cnd.notBetween(value, 5, 9));
-		conditionTrue("notBetween", DynamicReports.cnd.notBetween(value, 11, 20));
+		conditionFalse("notBetween", cnd.notBetween(value, 5, 15));
+		conditionFalse("notBetween", cnd.notBetween(value, 5, 10));
+		conditionFalse("notBetween", cnd.notBetween(value, 10, 20));
+		conditionTrue("notBetween", cnd.notBetween(value, 5, 9));
+		conditionTrue("notBetween", cnd.notBetween(value, 11, 20));
 
 		// equal object
 		FieldBuilder<Object> value2 = DynamicReports.field("name", Object.class);
-		conditionTrue("equal", DynamicReports.cnd.equal(value2, Type.A, Type.C, Type.F), Type.C);
-		conditionFalse("equal", DynamicReports.cnd.equal(value2, Type.B, Type.C), Type.E);
+		conditionTrue("equal", cnd.equal(value2, Type.A, Type.C, Type.F), Type.C);
+		conditionFalse("equal", cnd.equal(value2, Type.B, Type.C), Type.E);
 
 		// unequal object
-		conditionFalse("unequal", DynamicReports.cnd.unEqual(value2, Type.A, Type.C, Type.F), Type.C);
-		conditionTrue("unequal", DynamicReports.cnd.unEqual(value2, Type.B, Type.C), Type.E);
+		conditionFalse("unequal", cnd.unEqual(value2, Type.A, Type.C, Type.F), Type.C);
+		conditionTrue("unequal", cnd.unEqual(value2, Type.B, Type.C), Type.E);
 	}
 
 	private void conditionTrue(String name, DRISimpleExpression<Boolean> condition) {
