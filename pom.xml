@@ -52,8 +52,8 @@
 	<properties>
 		<!--Environment-->
         <encoding>UTF-8</encoding>
-		<sourceVersion>1.7</sourceVersion>
-		<targetVersion>1.7</targetVersion>
+		<sourceVersion>1.8</sourceVersion>
+		<targetVersion>1.8</targetVersion>
 
         <!--Dependencies-->
         <barcode4jVersion>2.0</barcode4jVersion>
@@ -67,6 +67,7 @@
         <jsonVersion>20080701</jsonVersion>
         <junitVersion>4.0</junitVersion>
         <poiVersion>3.15</poiVersion>
+        <slf4jVersion>1.7.25</slf4jVersion>
 		<springframeworkVersion>3.2.18.RELEASE</springframeworkVersion>
         <velocityVersion>1.7</velocityVersion>
         <xalanVersion>2.7.2</xalanVersion>
@@ -237,8 +238,8 @@
 				<artifactId>junit</artifactId>
 				<version>${junitVersion}</version>
 				<scope>test</scope>	
-			</dependency>			
-		</dependencies>
+			</dependency>
+        </dependencies>
 	</dependencyManagement>
 		
 	<build>

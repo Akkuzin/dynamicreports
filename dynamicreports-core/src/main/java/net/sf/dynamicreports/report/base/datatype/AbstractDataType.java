@@ -32,6 +32,7 @@ import net.sf.dynamicreports.report.definition.ReportParameters;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
 import net.sf.dynamicreports.report.definition.expression.DRIValueFormatter;
 import net.sf.dynamicreports.report.exception.DRException;
+import net.sf.dynamicreports.report.exception.DRReportException;
 
 /**
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
@@ -91,6 +92,16 @@ public abstract class AbstractDataType<U, T extends U> implements DRIDataType<U,
 	@Override
 	@SuppressWarnings("unchecked")
 	public Class<T> getValueClass() {
-		return (Class<T>) ReportUtils.getGenericClass(this, 1);
+
+		Class<T> valueClass;
+
+        try {
+            valueClass = (Class<T>) ReportUtils.getGenericClass(this, 1);
+        } catch (Throwable e) {
+            String message = String.format("Exception thrown while getting value class for %s",this);
+            throw new DRReportException(message, e.getCause());
+        }
+
+        return valueClass;
 	}
 }

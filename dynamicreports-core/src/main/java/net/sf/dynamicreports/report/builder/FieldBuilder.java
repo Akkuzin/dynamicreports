@@ -26,6 +26,7 @@ import net.sf.dynamicreports.report.base.DRField;
 import net.sf.dynamicreports.report.constant.Constants;
 import net.sf.dynamicreports.report.definition.DRIValue;
 import net.sf.dynamicreports.report.definition.datatype.DRIDataType;
+import net.sf.dynamicreports.report.exception.DRReportException;
 
 /**
  * @author Ricardo Mariaca (r.mariaca@dynamicreports.org)
@@ -38,7 +39,12 @@ public class FieldBuilder<T> extends AbstractBuilder<FieldBuilder<T>, DRField<T>
 	}
 
 	public FieldBuilder<T> setDataType(DRIDataType<? super T, T> dataType) {
-		getObject().setDataType(dataType);
+		try {
+			getObject().setDataType(dataType);
+		} catch (Exception e) {
+			String message = String.format("Exception thrown while setting DRIDataType: %s to field: %s", dataType, getObject());
+			throw new DRReportException(message, e.getCause());
+		}
 		return this;
 	}
 
