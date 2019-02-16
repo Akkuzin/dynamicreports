@@ -1,4 +1,4 @@
-/*
+/**
  * DynamicReports - Free Java reporting library for creating reports dynamically
  *
  * Copyright (C) 2010 - 2018 Ricardo Mariaca and the Dynamic Reports Contributors
@@ -29,7 +29,7 @@ import net.sf.jasperreports.engine.design.JRDesignGroup;
  * <p>GroupTransform class.</p>
  *
  * @author Ricardo Mariaca
- * 
+ *
  */
 public class GroupTransform {
     private JasperTransformAccessor accessor;
@@ -71,8 +71,12 @@ public class GroupTransform {
         if (group.getMinHeightToStartNewPage() != null) {
             jrGroup.setMinHeightToStartNewPage(group.getMinHeightToStartNewPage());
         }
+        if (group.getMinDetailsToStartFromTop() != null) {
+            jrGroup.setMinDetailsToStartFromTop(group.getMinDetailsToStartFromTop());
+        }
         jrGroup.setFooterPosition(ConstantTransform.groupFooterPosition(group.getFooterPosition()));
         jrGroup.setKeepTogether(group.isKeepTogether());
+        jrGroup.setPreventOrphanFooter(group.isPreventOrphanFooter());
         return jrGroup;
     }
 
