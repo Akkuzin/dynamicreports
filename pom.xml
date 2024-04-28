@@ -10,7 +10,7 @@
 
     <groupId>net.sourceforge.dynamicreports</groupId>
     <artifactId>dynamicreports-parent</artifactId>
-    <version>6.20.1</version>
+    <version>6.20.1.aaa</version>
     <packaging>pom</packaging>
 
     <name>DynamicReports - parent</name>
@@ -41,7 +41,7 @@
         <targetVersion>17</targetVersion>
 
         <!--Dependencies -->
-        <barcode4jVersion>2.1</barcode4jVersion>
+        <barcode4jVersion>2.2.3</barcode4jVersion>
         <barbecueVersion>1.5-beta1</barbecueVersion>
         <batikbridgeVersion>1.17</batikbridgeVersion>
         <commonslang3Version>3.13.0</commonslang3Version>
@@ -145,7 +145,7 @@
                 <version>${commonslang3Version}</version>
             </dependency>
             <dependency>
-                <groupId>net.sf.barcode4j</groupId>
+                <groupId>com.singingbush</groupId>
                 <artifactId>barcode4j</artifactId>
                 <version>${barcode4jVersion}</version>
                 <scope>runtime</scope>

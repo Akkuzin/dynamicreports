@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sourceforge.dynamicreports</groupId>
         <artifactId>dynamicreports-parent</artifactId>
-        <version>6.20.1</version>
+        <version>6.20.1.aaa</version>
     </parent>
 
     <artifactId>dynamicreports-examples</artifactId>
@@ -22,7 +22,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.barcode4j</groupId>
+            <groupId>com.singingbush</groupId>
             <artifactId>barcode4j</artifactId>
         </dependency>
         <dependency>

@@ -7,7 +7,7 @@
     <parent>
         <groupId>net.sourceforge.dynamicreports</groupId>
         <artifactId>dynamicreports-parent</artifactId>
-        <version>6.20.1</version>
+        <version>6.20.1.aaa</version>
     </parent>
 
     <artifactId>dynamicreports-core</artifactId>
@@ -59,7 +59,7 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.sf.barcode4j</groupId>
+            <groupId>com.singingbush</groupId>
             <artifactId>barcode4j</artifactId>
             <scope>compile</scope>
         </dependency>
@@ -71,6 +71,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
