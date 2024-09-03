@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sourceforge.dynamicreports</groupId>
         <artifactId>dynamicreports-parent</artifactId>
-        <version>6.20.1.aaa</version>
+        <version>6.20.1.1.aaa</version>
     </parent>
 
     <artifactId>dynamicreports-examples</artifactId>
@@ -273,9 +273,9 @@
                 <plugins>
                     <!--We have to upgrade for jaxb api to work in java9-->
                     <plugin>
-                        <groupId>org.jvnet.jaxb2.maven2</groupId>
-                        <artifactId>maven-jaxb23-plugin</artifactId>
-                        <version>0.15.3</version>
+                        <groupId>org.jvnet.jaxb</groupId>
+                        <artifactId>jaxb-maven-plugin</artifactId>
+                        <version>4.0.6</version>
                         <configuration>
                             <schemaIncludes>
                                 <schemaInclude>**/dynamicreports.xsd</schemaInclude>
@@ -292,27 +292,6 @@
                                 <goals>
                                     <goal>generate</goal>
                                 </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <!--Disable this version in java9-->
-                    <plugin>
-                        <groupId>org.jvnet.jaxb2.maven2</groupId>
-                        <artifactId>maven-jaxb2-plugin</artifactId>
-                        <version>0.15.3</version>
-                        <configuration>
-                            <schemaIncludes>
-                                <schemaInclude>**/dynamicreports.xsd</schemaInclude>
-                            </schemaIncludes>
-                            <bindingIncludes>
-                                <bindingInclude>**/dynamicreports.xjb</bindingInclude>
-                            </bindingIncludes>
-                            <removeOldOutput>true</removeOldOutput>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>jaxb</id>
-                                <phase>none</phase>
                             </execution>
                         </executions>
                     </plugin>
@@ -372,30 +351,8 @@
                 </plugins>
             </build>
             <dependencies>
-                <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
-                <dependency>
-                    <groupId>javax.xml.bind</groupId>
-                    <artifactId>jaxb-api</artifactId>
-                    <version>${jaxb-apiVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-core -->
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core -->
-                <dependency>
-                    <groupId>org.glassfish.jaxb</groupId>
-                    <artifactId>jaxb-core</artifactId>
-                    <version>${jaxb-coreVersion}</version>
-                </dependency>
-                <!-- https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl -->
-                <dependency>
-                    <groupId>com.sun.xml.bind</groupId>
-                    <artifactId>jaxb-impl</artifactId>
-                    <version>${jaxb-implVersion}</version>
-                </dependency>
+                <dependency><groupId>jakarta.xml.bind</groupId><artifactId>jakarta.xml.bind-api</artifactId><version>4.0.2</version></dependency>
+                <dependency><groupId>org.glassfish.jaxb</groupId><artifactId>jaxb-runtime</artifactId><version>4.0.5</version><scope>test</scope></dependency>
             </dependencies>
         </profile>
     </profiles>
